@@ -1,5 +1,6 @@
 "use server";
 
+import { signIn } from "@/auth";
 import { loginFormSchema } from "@/validation/schema";
 
 export const loginWithCredential = async ({
@@ -23,4 +24,11 @@ export const loginWithCredential = async ({
   }
 
   // if succeeded
+  try {
+    await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+  } catch (e) {}
 };

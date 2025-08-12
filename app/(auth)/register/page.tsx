@@ -1,6 +1,5 @@
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -9,7 +8,6 @@ import {
 } from "@/components/ui/card";
 import RegisterForm from "./register-form";
 import Link from "next/link";
-import { Separator } from "@/components/ui/separator";
 
 export default function page() {
   return (
@@ -22,12 +20,14 @@ export default function page() {
         <CardContent>
           <RegisterForm />
         </CardContent>
-        <Separator />
+        <div className="border-t-1 mx-4 border-slate-200" />
         <CardFooter>
-          <p className="pr-1">Already have an account? Login</p>
-          <Link href="/login" className="underline hover:bg-slate-50">
-            here.
-          </Link>
+          <div className="flex">
+            <p className="pr-1">Already have an account? Login</p>
+            <Link href="/login" className="underline hover:bg-slate-50">
+              here.
+            </Link>
+          </div>
         </CardFooter>
       </Card>
     </div>

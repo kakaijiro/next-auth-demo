@@ -2,7 +2,7 @@
 
 import { hash } from "bcryptjs";
 import db from "@/db/drizzle";
-import { registerFormSchema as newUserSchema } from "@/validation/schema";
+import { registerFormSchema } from "@/validation/schema";
 import { users } from "@/db/usersSchema";
 
 export const registerUser = async ({
@@ -15,7 +15,7 @@ export const registerUser = async ({
   passwordConfirm: string;
 }) => {
   try {
-    const newUserValidation = newUserSchema.safeParse({
+    const newUserValidation = registerFormSchema.safeParse({
       email,
       password,
       passwordConfirm,

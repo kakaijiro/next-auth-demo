@@ -1,6 +1,5 @@
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -9,7 +8,6 @@ import {
 } from "@/components/ui/card";
 import LoginForm from "./login-form";
 import Link from "next/link";
-import { Separator } from "@/components/ui/separator";
 
 export default function page() {
   return (
@@ -22,12 +20,23 @@ export default function page() {
         <CardContent>
           <LoginForm />
         </CardContent>
-        <Separator />
-        <CardFooter>
-          <p className="pr-1">Haven&apos;t an account? Register</p>
-          <Link href="/register" className="underline hover:bg-slate-50">
-            here.
-          </Link>
+        <div className="border-t-1 mx-4 border-slate-200 " />
+        <CardFooter className="flex flex-col items-start justify-center">
+          <div className="flex">
+            <p className="mr-1">Don&apos;t have an account? Register</p>
+            <Link href="/register" className="underline hover:bg-slate-50">
+              here.
+            </Link>
+          </div>
+          <div className="flex">
+            <p className="mr-1">Forget password?</p>
+            <Link
+              href="/reset-password"
+              className="underline hover:bg-slate-50"
+            >
+              Reset your password
+            </Link>
+          </div>
         </CardFooter>
       </Card>
     </div>

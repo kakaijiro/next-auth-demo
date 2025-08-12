@@ -30,10 +30,21 @@ export default function LoginForm() {
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     // handler
-    await loginWithCredential({
+    const response = await loginWithCredential({
       email: data.email,
       password: data.password,
     });
+
+    if (response?.error) {
+      // if failed
+      return {
+        error: true,
+        message: "",
+      };
+    } else {
+      // if succeeded
+      router.push("/my-account");
+    }
   };
   return (
     <Form {...form}>
