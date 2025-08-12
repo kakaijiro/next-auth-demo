@@ -41,6 +41,8 @@ export default function RegisterForm() {
       form.setError("email", {
         message: response?.message,
       });
+      // exit
+      return;
     }
 
     // if succeeded
