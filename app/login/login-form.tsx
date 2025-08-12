@@ -13,43 +13,27 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Resolver, useForm } from "react-hook-form";
 import z from "zod";
-import { registerFormSchema as formSchema } from "@/validation/schema";
-import { registerUser } from "./actions";
+import { loginFormSchema as formSchema } from "@/validation/schema";
+import { loginWithCredential } from "./actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-export default function RegisterForm() {
+export default function LoginForm() {
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema) as Resolver<z.infer<typeof formSchema>>,
     defaultValues: {
       email: "",
       password: "",
-      passwordConfirm: "",
     },
   });
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
-    const response = await registerUser({
+    // handler
+    await loginWithCredential({
       email: data.email,
       password: data.password,
-      passwordConfirm: data.passwordConfirm,
     });
-
-    if (response?.error) {
-      // add error message to email field
-      form.setError("email", {
-        message: response?.message,
-      });
-    }
-
-    // if succeeded
-    toast.success("Registered!", {
-      description: "Your account has been created. Please login.",
-    });
-    router.push("/login");
-
-    console.log({ response });
   };
   return (
     <Form {...form}>
@@ -84,20 +68,7 @@ export default function RegisterForm() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="passwordConfirm"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Confirm Password</FormLabel>
-                <FormControl>
-                  <Input type="password" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit">Register</Button>
+          <Button type="submit">Login</Button>
         </fieldset>
       </form>
     </Form>

@@ -14,24 +14,39 @@ export const registerUser = async ({
   password: string;
   passwordConfirm: string;
 }) => {
-  const newUserValidation = newUserSchema.safeParse({
-    email,
-    password,
-    passwordConfirm,
-  });
+  try {
+    const newUserValidation = newUserSchema.safeParse({
+      email,
+      password,
+      passwordConfirm,
+    });
 
-  if (!newUserValidation.success) {
+    if (!newUserValidation.success) {
+      return {
+        error: true,
+        message:
+          newUserValidation.error.issues[0]?.message ?? "An error occurred",
+      };
+    }
+
+    // if validation passed
+    const hashedPassword = await hash(password, 10); // TODO
+    await db.insert(users).values({
+      email,
+      password: hashedPassword,
+    });
+  } catch (e: any) {
+    const code = (e as any)?.code ?? (e as any)?.cause?.code;
+    if (code === "23505") {
+      return {
+        error: true,
+        message: "An account is already registered with that email address.",
+      };
+    }
+
     return {
       error: true,
-      message:
-        newUserValidation.error.issues[0]?.message ?? "An error occurred",
+      message: "An error occurred",
     };
   }
-
-  // if validation passed
-  const hashedPassword = await hash(password, 10); // TODO
-  await db.insert(users).values({
-    email,
-    password: hashedPassword,
-  });
 };

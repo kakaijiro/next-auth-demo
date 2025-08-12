@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import RegisterForm from "./register-form";
+import LoginForm from "./login-form";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 
@@ -16,16 +16,16 @@ export default function page() {
     <div className="flex items-center justify-center min-h-screen">
       <Card className="max-w-sm w-full">
         <CardHeader className="text-3xl">
-          <CardTitle>Register</CardTitle>
-          <CardDescription>Register for a new accout</CardDescription>
+          <CardTitle>Login</CardTitle>
+          <CardDescription>Login to your account.</CardDescription>
         </CardHeader>
         <CardContent>
-          <RegisterForm />
+          <LoginForm />
         </CardContent>
         <Separator />
         <CardFooter>
-          <p className="pr-2">Already have an account? Login</p>
-          <Link href="/login" className="underline hover:bg-slate-50">
+          <p className="mr-2">Haven&apos;t an account? Register</p>
+          <Link href="/register" className="underline hover:bg-slate-50">
             here.
           </Link>
         </CardFooter>
