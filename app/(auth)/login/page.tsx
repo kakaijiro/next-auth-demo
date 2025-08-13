@@ -23,15 +23,15 @@ export default function page() {
         <div className="border-t-1 mx-4 border-slate-200 " />
         <CardFooter className="flex flex-col items-start justify-center">
           <div className="flex">
-            <p className="mr-1">Don&apos;t have an account? Register</p>
+            <p className="mr-1">Don&apos;t have an account?</p>
             <Link href="/register" className="underline hover:bg-slate-50">
-              here.
+              Register here.
             </Link>
           </div>
           <div className="flex">
             <p className="mr-1">Forget password?</p>
             <Link
-              href="/reset-password"
+              href="/password-reset"
               className="underline hover:bg-slate-50"
             >
               Reset your password

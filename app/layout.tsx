@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { auth } from "@/auth";
-import LogoutButton from "@/components/logout-button";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,23 +24,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth();
-
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div>
-          {session?.user?.email ? (
-            <div className="flex gap-2">
-              {session.user.email}
-              <LogoutButton />
-            </div>
-          ) : (
-            "No logged-in user now"
-          )}
-        </div>
         {children}
         <Toaster position="top-right" richColors closeButton duration={4000} />
       </body>

@@ -36,11 +36,10 @@ export default function LoginForm() {
     });
 
     if (response?.error) {
-      // if failed
-      return {
-        error: true,
-        message: "",
-      };
+      // if failed display error message in form
+      form.setError("root", {
+        message: response.message,
+      });
     } else {
       // if succeeded
       router.push("/my-account");
@@ -79,6 +78,9 @@ export default function LoginForm() {
               </FormItem>
             )}
           />
+          {!!form.formState.errors.root?.message && (
+            <FormMessage>{form.formState.errors.root.message}</FormMessage>
+          )}
           <Button type="submit">Login</Button>
         </fieldset>
       </form>

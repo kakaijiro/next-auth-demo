@@ -23,9 +23,9 @@ export default function page() {
         <div className="border-t-1 mx-4 border-slate-200" />
         <CardFooter>
           <div className="flex">
-            <p className="pr-1">Already have an account? Login</p>
+            <p className="pr-1">Already have an account?</p>
             <Link href="/login" className="underline hover:bg-slate-50">
-              here.
+              Login here.
             </Link>
           </div>
         </CardFooter>
