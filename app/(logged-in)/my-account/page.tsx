@@ -17,10 +17,8 @@ export default async function page() {
       <div className="flex items-center justify-center min-h-screen min-w-screen">
         <Card className="max-w-sm w-full">
           <CardHeader className="text-3xl">
-            <CardHeader className="text-3xl">
-              <CardTitle>My Account</CardTitle>
-              <CardDescription>User details</CardDescription>
-            </CardHeader>
+            <CardTitle>My Account</CardTitle>
+            <CardDescription>User details</CardDescription>
           </CardHeader>
           <CardContent className="flex gap-4">
             <Label>Email Address</Label>
