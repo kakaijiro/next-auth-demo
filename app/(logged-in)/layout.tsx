@@ -29,7 +29,7 @@ export default async function layout({
           <LogoutButton />
         </div>
       </nav>
-      {children}
+      <div>{children}</div>
     </div>
   );
 }

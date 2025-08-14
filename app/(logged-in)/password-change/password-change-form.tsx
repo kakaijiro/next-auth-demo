@@ -13,37 +13,41 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Resolver, useForm } from "react-hook-form";
 import z from "zod";
-import { loginFormSchema as formSchema } from "@/validation/schema";
-import { loginWithCredential } from "./actions";
-import { useRouter } from "next/navigation";
+import { passwordChangeFormSchema as formSchema } from "@/validation/schema";
+import { changePassword } from "./actions";
+import { toast } from "sonner";
 
-export default function LoginForm() {
-  const router = useRouter();
+export default function PasswordChangeForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema) as Resolver<z.infer<typeof formSchema>>,
     defaultValues: {
-      email: "",
-      password: "",
+      currentPassword: "",
+      newPassword: "",
+      newPasswordConfirm: "",
     },
   });
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     // handler
-    const response = await loginWithCredential({
-      email: data.email,
-      password: data.password,
+    const response = await changePassword({
+      currentPassword: data.currentPassword,
+      newPassword: data.newPassword,
+      newPasswordConfirm: data.newPasswordConfirm,
     });
-
+    // if failed display error message in form
     if (response?.error) {
-      // if failed display error message in form
       form.setError("root", {
         message: response.message,
       });
     } else {
       // if succeeded
-      router.push("/my-account");
+      form.reset();
+      toast.success("Password Updated!", {
+        description: "Your password has been updated successfully.",
+      });
     }
   };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
@@ -53,12 +57,12 @@ export default function LoginForm() {
         >
           <FormField
             control={form.control}
-            name="email"
+            name="currentPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Current Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="m@example.com" type="email" {...field} />
+                  <Input type="password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -66,10 +70,23 @@ export default function LoginForm() {
           />
           <FormField
             control={form.control}
-            name="password"
+            name="newPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>New Password</FormLabel>
+                <FormControl>
+                  <Input type="password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="newPasswordConfirm"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Confirm New Password</FormLabel>
                 <FormControl>
                   <Input type="password" {...field} />
                 </FormControl>
@@ -78,9 +95,9 @@ export default function LoginForm() {
             )}
           />
           {!!form.formState.errors.root?.message && (
-            <FormMessage>{form.formState.errors.root.message}</FormMessage>
+            <FormMessage>{form.formState.errors.root?.message}</FormMessage>
           )}
-          <Button type="submit">Login</Button>
+          <Button type="submit">Change Password</Button>
         </fieldset>
       </form>
     </Form>

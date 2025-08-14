@@ -7,6 +7,22 @@ const passwordSchema = z
     "password must include 5 letters, at least 1 lowercase letter, at least 1 uppercase letter, and at least 1 number"
   );
 
+export const passwordChangeFormSchema = z
+  .object({
+    currentPassword: passwordSchema,
+    newPassword: passwordSchema,
+    newPasswordConfirm: z.string(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.newPassword !== data.newPasswordConfirm) {
+      ctx.addIssue({
+        message: "Passwords do not match",
+        path: ["newPasswordConfirm"],
+        code: "custom",
+      });
+    }
+  });
+
 export const loginFormSchema = z.object({
   email: z.email(),
   password: passwordSchema,
