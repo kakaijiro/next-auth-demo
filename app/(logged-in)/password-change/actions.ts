@@ -69,10 +69,17 @@ export const changePassword = async ({
 
   // finally, update db's password
   const hashedPassword = await hash(newPassword, 10); // TODO
-  await db
-    .update(users)
-    .set({
-      password: hashedPassword,
-    })
-    .where(eq(users.id, parseInt(session.user.id)));
+  try {
+    await db
+      .update(users)
+      .set({
+        password: hashedPassword,
+      })
+      .where(eq(users.id, parseInt(session.user.id)));
+  } catch (e: unknown) {
+    return {
+      error: true,
+      message: "An error occurred",
+    };
+  }
 };
