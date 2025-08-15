@@ -1,6 +1,15 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -44,8 +53,18 @@ export default function LoginForm() {
       router.push("/my-account");
     }
   };
+
+  // fetch email as derived value
+  const email = form.watch("email");
+  
   return (
-    <Form {...form}>
+    <Card className="max-w-sm w-full">
+        <CardHeader className="text-3xl">
+          <CardTitle>Login</CardTitle>
+          <CardDescription>Login to your account.</CardDescription>
+        </CardHeader>
+        <CardContent>
+        <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
         <fieldset
           className="flex flex-col gap-4"
@@ -84,5 +103,25 @@ export default function LoginForm() {
         </fieldset>
       </form>
     </Form>
+        </CardContent>
+        <div className="border-t-1 mx-4 border-slate-200 " />
+        <CardFooter className="flex flex-col items-start justify-center">
+          <div className="flex">
+            <p className="mr-1">Don&apos;t have an account?</p>
+            <Link href="/register" className="underline hover:bg-slate-50">
+              Register.
+            </Link>
+          </div>
+          <div className="flex">
+            <p className="mr-1">Forget password?</p>
+            <Link
+              href={email ? `/password-reset?email=${encodeURIComponent(email)}` : `/password-reset`}
+              className="underline hover:bg-slate-50"
+            >
+              Reset your password
+            </Link>
+          </div>
+        </CardFooter>
+      </Card>
   );
 }
