@@ -10,7 +10,6 @@ export default async function layout({
 }) {
   const session = await auth();
   if (!session?.user?.id) {
-    console.log({ session });
     redirect("/login");
   }
 

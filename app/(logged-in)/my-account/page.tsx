@@ -9,9 +9,20 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import TwoFactorAuthForm from "./two-factor-auth-form";
+import db from "@/db/drizzle";
+import { users } from "@/db/usersSchema";
+import { eq } from "drizzle-orm";
 
 export default async function page() {
   const session = await auth();
+  const [user] = await db
+    .select({
+      twoFactorActivated: users.twoFactorActivated,
+    })
+    .from(users)
+    .where(eq(users.id, parseInt(session?.user?.id || "0")));
+
   return (
     <div className="flex-1 flex justify-center items-center">
       <div className="flex items-center justify-center min-h-screen min-w-screen">
@@ -26,7 +37,9 @@ export default async function page() {
           </CardContent>
           <div className="border-t-1 mx-4 border-slate-200" />
           <CardFooter>
-            <Button className="w-full">Use 2 factor authentication</Button>
+            <TwoFactorAuthForm
+              twoFactorActivated={user?.twoFactorActivated ?? false}
+            />
           </CardFooter>
         </Card>
       </div>

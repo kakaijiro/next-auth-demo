@@ -54,5 +54,4 @@ export const passwordReset = async (emailAddress: string) => {
     html: `Hello, ${emailAddress}! You requested to reset your password. Here's your password reset link. This link will expire in 1 hour: <a href="${resetLink}">${resetLink}</a>`,
   });
 
-  console.log({ passwordResetToken });
 };
